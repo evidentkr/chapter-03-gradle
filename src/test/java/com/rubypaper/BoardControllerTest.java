@@ -22,7 +22,7 @@ import com.rubypaper.service.BoardService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK) //톰켓을 사용하지 않는다.
-@AutoConfigureMockMvc  //@Service @Repository 객체를 모두 참조(메모리로딩)
+@AutoConfigureMockMvc  //@Service @Repository 객체를 모두 참조(메모리로딩) :: WebMvcTest 는 Controller 객체만 대상으로함
 public class BoardControllerTest {
 
 	@Autowired
@@ -37,7 +37,7 @@ public class BoardControllerTest {
 		when(boardService.hello("둘리")).thenReturn("Hello : 둘리");
 		//파라미터 전달 테스트
 		mockMvc.perform(get("/hello").param("name","둘리"))  //get,post,put,delete
-		.andExpect(status().isOk())
+		.andExpect(status().isOk()) //isNotFound()[404에러] isMethodNotAllowed()[405에러] isInternalServerError()[500에러]
 		.andExpect(content().string("Hello : 둘리"))
 		.andDo(print());
 		

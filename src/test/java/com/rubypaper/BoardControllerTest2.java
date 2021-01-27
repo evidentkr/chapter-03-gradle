@@ -3,6 +3,7 @@ package com.rubypaper;
 import static org.junit.Assert.assertEquals;
 //import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.rubypaper.domain.BoardVO;
 import org.junit.Test;
 //import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +14,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT) //내장 톰캣으로 테스트
 public class BoardControllerTest2 {
 
 	@Autowired
@@ -23,5 +24,11 @@ public class BoardControllerTest2 {
 	public void testHello() throws Exception {
 		String result = restTemplate.getForObject("/hello?name=둘리", String.class);
 		assertEquals("Hello : 둘리", result);
+	}
+
+	@Test
+	public void testGetBoard() throws Exception {
+		BoardVO board = restTemplate.getForObject("/getBoard", BoardVO.class);
+		assertEquals("writer", board.getWriter());
 	}
 }
